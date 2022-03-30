@@ -3,7 +3,7 @@ import re
 from dhpythonirodsutils import exceptions
 
 
-def is_safe_full_path(full_path):
+def validate_full_path_safety(full_path):
     """
     Validate if the full path provided is safe or not
 
