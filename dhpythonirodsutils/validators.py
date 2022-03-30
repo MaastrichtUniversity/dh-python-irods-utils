@@ -1,6 +1,6 @@
 import os
 import re
-import exceptions
+from dhpythonirodsutils import exceptions
 
 
 def is_safe_full_path(full_path):

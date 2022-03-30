@@ -1,5 +1,5 @@
 import re
-import validators
+from dhpythonirodsutils import validators
 
 
 def format_dropzone_path(token, dropzone_type):
