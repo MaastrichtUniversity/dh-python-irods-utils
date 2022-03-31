@@ -69,7 +69,7 @@ def format_instance_dropzone_path(token, dropzone_type):
 
 def format_schema_collection_path(project_id, collection_id):
     """
-    Format the schema.json dropzone absolute path based on the token and the dropzone type.
+    Format the schema.json collection absolute path based on the token and the dropzone type.
 
     Parameters
     ----------
@@ -86,10 +86,9 @@ def format_schema_collection_path(project_id, collection_id):
     project_collection_path = format_project_collection_path(project_id, collection_id)
     return "{}/schema.json".format(project_collection_path)
 
-
 def format_instance_collection_path(project_id, collection_id):
     """
-    Format the instance.json dropzone absolute path based on the token and the dropzone type.
+    Format the instance.json collection absolute path based on the token and the dropzone type.
 
     Parameters
     ----------
@@ -106,6 +105,48 @@ def format_instance_collection_path(project_id, collection_id):
     project_collection_path = format_project_collection_path(project_id, collection_id)
     return "{}/instance.json".format(project_collection_path)
 
+def format_schema_versioned_collection_path(project_id, collection_id, version):
+    """
+    Format the versioned schema.json collection absolute path based on the token and the dropzone type.
+
+    Parameters
+    ----------
+    project_id : str
+        The project_id, eg P00000001
+    collection_id : str
+        The collection_id, eg C00000001
+    version: str
+        The version number, eg 2
+
+    Returns
+    -------
+    str
+        Absolute schema.json collection absolute path.
+    """
+    project_collection_path = format_project_collection_path(project_id, collection_id)
+    return "{}/.metadata_versions/schema.{}.json".format(project_collection_path, version)
+
+
+def format_instance_versioned_collection_path(project_id, collection_id, version):
+    """
+    Format the versioned instance.json collection absolute path based on the token and the dropzone type.
+
+    Parameters
+    ----------
+    project_id : str
+        The project_id eg P00000001
+    collection_id : str
+        The collection_id eg C00000001
+    version: str
+        The version number, eg 2
+
+    Returns
+    -------
+    str
+        Absolute instance.json collection absolute path.
+    """
+    project_collection_path = format_project_collection_path(project_id, collection_id)
+    return "{}/.metadata_versions/schema.{}.json".format(project_collection_path, version)
 
 def format_project_path(project_id):
     """
