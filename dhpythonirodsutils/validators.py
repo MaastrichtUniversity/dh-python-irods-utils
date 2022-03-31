@@ -138,3 +138,36 @@ def validate_dropzone_type(dropzone_type):
         return True
     else:
         raise exceptions.ValidationError("Invalid dropzone type {}".format(dropzone_type))
+
+
+def validate_irods_collection(path):
+    """
+    Validate an iRODS collection path.
+
+    Parameters
+    ----------
+    path: str
+        The absolute iRODS collection path
+
+    Returns
+    -------
+    True if valid
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not valid.
+    """
+    try:
+        validate_project_collection_path(path)
+        return True
+    except exceptions.ValidationError:
+        pass
+
+    try:
+        validate_project_path(path)
+        return True
+    except exceptions.ValidationError:
+        pass
+
+    raise exceptions.ValidationError("Invalid irods collection path {}".format(path))
