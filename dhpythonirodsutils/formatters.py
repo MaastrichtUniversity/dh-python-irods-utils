@@ -207,6 +207,26 @@ def get_project_from_collection_path(path):
     else:
         return None
 
+def get_project_id_from_project_path(path):
+    """
+    Return the project_id from the project path
+
+    Parameters
+    ----------
+    path
+        The full path of the project
+
+    Returns
+    -------
+        The project id
+
+    """
+    match = re.search(r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/?", path)
+    if match is not None:
+        return match.group("project")
+    else:
+        return None
+
 def get_project_id_from_collection_path(path):
     """
     Return the project_id from the projectcollection path
