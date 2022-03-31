@@ -148,7 +148,7 @@ def format_instance_versioned_collection_path(project_id, collection_id, version
         Absolute instance.json collection absolute path.
     """
     metadata_versions_path = format_metadata_versions_path(project_id, collection_id)
-    return "{}/schema.{}.json".format(metadata_versions_path, version)
+    return "{}/instance.{}.json".format(metadata_versions_path, version)
 
 
 def format_metadata_versions_path(project_id, collection_id):
