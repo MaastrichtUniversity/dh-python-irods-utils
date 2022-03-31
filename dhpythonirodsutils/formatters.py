@@ -189,7 +189,7 @@ def format_project_collection_path(project_id, collection_id):
 
 def get_project_from_collection_path(path):
     """
-    Return the project_id from the projectcollection path
+    Return the project path from the projectcollection path
 
     Parameters
     ----------
@@ -204,5 +204,45 @@ def get_project_from_collection_path(path):
     match = re.search(r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/C[0-9]{9}/?", path)
     if match is not None:
         return format_project_path(match.group("project"))
+    else:
+        return None
+
+def get_project_id_from_collection_path(path):
+    """
+    Return the project_id from the projectcollection path
+
+    Parameters
+    ----------
+    path
+        The full path of the project collection
+
+    Returns
+    -------
+        The project id
+
+    """
+    match = re.search(r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/C[0-9]{9}/?", path)
+    if match is not None:
+        return match.group("project")
+    else:
+        return None
+
+def get_collection_id_from_collection_path(path):
+    """
+    Return the collection_id from the projectcollection path
+
+    Parameters
+    ----------
+    path
+        The full path of the project collection
+
+    Returns
+    -------
+        The collection id
+
+    """
+    match = re.search(r"^(/nlmumc/projects/)?(P[0-9]{9})/?(?P<collection>C[0-9]{9})/?", path)
+    if match is not None:
+        return match.group("collection")
     else:
         return None
