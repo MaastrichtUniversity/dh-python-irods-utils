@@ -27,6 +27,26 @@ def format_dropzone_path(token, dropzone_type):
     return dropzone_path
 
 
+def format_absolute_project_path(relative_path):
+    """
+    Format the projects absolute path based on a relative path.
+
+    Parameters
+    ----------
+    relative_path : str
+       Relative path to a collection or file
+
+    Returns
+    -------
+    str
+        Absolute project path
+    """
+
+    absolute_path = "/nlmumc/projects/{}".format(relative_path)
+    validators.validate_full_path_safety(absolute_path)
+    return absolute_path
+
+
 def format_schema_dropzone_path(token, dropzone_type):
     """
     Format the schema.json dropzone absolute path based on the token and the dropzone type.

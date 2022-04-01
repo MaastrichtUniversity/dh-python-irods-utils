@@ -1,5 +1,6 @@
 import os
 import re
+from itertools import takewhile
 from dhpythonirodsutils import exceptions
 
 
@@ -34,7 +35,8 @@ def validate_path_safety(basedir, path):
 
     """
     match_path = os.path.abspath(path)
-    if basedir == os.path.commonpath((basedir, match_path)):
+    # if basedir == os.path.commonpath((basedir, match_path)): # NOT pyhton 2.7 compatible
+    if basedir == commonpath([basedir, match_path]):
         return True
     else:
         raise exceptions.ValidationError("Path is not safe: {}".format(path))
@@ -171,3 +173,14 @@ def validate_irods_collection(path):
         pass
 
     raise exceptions.ValidationError("Invalid irods collection path {}".format(path))
+
+
+# Python 2.7 compatible version of  os.path.commonpath
+# According to http://rosettacode.org/wiki/Find_common_directory_path#Python
+def commonpath(paths, sep="/"):
+    bydirectorylevels = zip(*[p.split(sep) for p in paths])
+    return sep.join(x[0] for x in takewhile(allnamesequal, bydirectorylevels))
+
+
+def allnamesequal(name):
+    return all(n == name[0] for n in name[1:])
