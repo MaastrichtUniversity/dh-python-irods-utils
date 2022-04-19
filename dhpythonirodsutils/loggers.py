@@ -62,7 +62,7 @@ def format_warning_message(user, message):
     return format_log_message("WARNING", user, message)
 
 
-def format_audit_trail_message(user_id, event):
+def format_audit_trail_message(user_id, topic: str, event):
     """
     Log an entry with AUDIT_TRAIL tag and user ID
 
@@ -70,14 +70,17 @@ def format_audit_trail_message(user_id, event):
     ----------
     user_id: int
         The user identifier number
+    topic: str
+        The General topic for this log
     event: str
         The event you want to be logged
 
     """
     if type(user_id) != int:
         user_id = ""
-    return "[%s][AUDIT_TRAIL][USER_ID %s] - %s" % (
+    return "[%s][AUDIT_TRAIL][%s][%s] - %s" % (
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S%z"),
         str(user_id),
+        str(topic).upper(),
         event,
     )
