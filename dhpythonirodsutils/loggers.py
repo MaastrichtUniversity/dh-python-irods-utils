@@ -62,7 +62,7 @@ def format_warning_message(user, message):
     return format_log_message("WARNING", user, message)
 
 
-def format_audit_trail_message(user_id, topic: str, event):
+def format_audit_trail_message(user_id, topic, event):
     """
     Log an entry with AUDIT_TRAIL tag and user ID
 
