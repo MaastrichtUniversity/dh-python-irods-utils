@@ -52,7 +52,7 @@ def validate_project_id(project_id):
         The project id, eg P000000001
 
     """
-    if re.search("^P[0-9]{9}$", project_id) is not None:
+    if type(project_id) == str and re.search("^P[0-9]{9}$", project_id) is not None:
         return True
     else:
         raise exceptions.ValidationError("Invalid project id {}".format(project_id))
@@ -173,6 +173,54 @@ def validate_irods_collection(path):
         pass
 
     raise exceptions.ValidationError("Invalid irods collection path {}".format(path))
+
+
+def validate_dropzone_token(token):
+    """
+    Check if the dropzone token follow the naming convention.
+
+    Parameters
+    ----------
+    token: str
+        The dropzone token value.
+
+    Returns
+    -------
+    True if valid
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not valid.
+
+    """
+    if re.search(r"^\w+-\w+$", token) is not None:
+        return True
+    else:
+        raise exceptions.ValidationError("Invalid dropzone token{}".format(token))
+
+
+def validate_metadata_version_number(version):
+    """
+    Check if the string version variable represents a positive integer.
+
+    Parameters
+    ----------
+    version:str
+        The metadata version number to check
+
+    Returns
+    -------
+    True if valid
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not valid.
+    """
+    if type(version) == str and version.isdigit():
+        return True
+    raise exceptions.ValidationError("Invalid version number {}".format(version))
 
 
 # Python 2.7 compatible version of  os.path.commonpath
