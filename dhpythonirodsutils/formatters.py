@@ -244,11 +244,12 @@ def format_project_path(project_id):
 
     Parameters
     ----------
-    project_id
+    project_id: str
         The project id, e.g: P000000001
 
     Returns
     -------
+    str
         The formatted path
 
     Raises
@@ -266,13 +267,14 @@ def format_project_collection_path(project_id, collection_id):
 
     Parameters
     ----------
-    project_id
+    project_id: str
         The project id, e.g: P000000001
-    collection_id
+    collection_id: str
         The collection id, e.g: C000000001
 
     Returns
     -------
+    str
         The formatted path
 
     Raises
@@ -310,11 +312,12 @@ def get_project_id_from_project_collection_path(project_collection_path):
 
     Parameters
     ----------
-    project_collection_path
+    project_collection_path: str
         The full path of the project collection
 
     Returns
     -------
+    str
         The project id or None
     """
     match = re.search(
@@ -331,11 +334,12 @@ def get_project_path_from_project_collection_path(project_collection_path):
 
     Parameters
     ----------
-    project_collection_path
+    project_collection_path: str
         The full path of the project collection
 
     Returns
     -------
+    str
         The project path or None
 
     Raises
@@ -357,11 +361,12 @@ def get_collection_id_from_project_collection_path(project_collection_path):
 
     Parameters
     ----------
-    project_collection_path
+    project_collection_path: str
         The full path of the project collection
 
     Returns
     -------
+    str
         The collection id
     """
     match = re.search(
@@ -378,11 +383,12 @@ def format_boolean_to_string(boolean):
 
     Parameters
     ----------
-    boolean
+    boolean: bool
         True or False
 
     Returns
     -------
+    str
         "true" if True, "false" if False
     """
     if boolean:
@@ -396,11 +402,12 @@ def format_string_to_boolean(string):
 
     Parameters
     ----------
-    string
+    string: str
         "true" or anything else
 
     Returns
     -------
+    bool
         True if "true", False if anything else
     """
     if string == "true":

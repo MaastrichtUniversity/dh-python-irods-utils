@@ -175,7 +175,7 @@ class TestProjectIdInvalid:
     "project_collection_path",
     [
         "/nlmumc/projects/P000000001/C000000001",
-        "/nlmumc/projects/P000000002/C000000002/",
+        "/nlmumc/projects/P000000002/C000000002/zxc",
         "/nlmumc/projects/P987654321/C123456789",
         "P000000001/C000000002/qwfqwf",
     ],
@@ -198,9 +198,9 @@ class TestProjectCollectionPathValid:
     "project_collection_path",
     [
         "/nlmumc/projects/P0000000011111/C000000001",
-        "/nlmumc/projects/P0000000011111/C000000001/",
+        "/nlmumc/projects/P0000000011111/C000000001/zxc",
         "/nlmumc/projects/P00000001/C00000000022",
-        "/nlmumc2/projects/P000000001/C00000000022/",
+        "/nlmumc2/projects/P000000001/C00000000022/ewq",
         "/nlmumc/projectss/P000000001/C123456789",
         "C123456789",
     ],
