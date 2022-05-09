@@ -10,9 +10,18 @@ def validate_full_path_safety(full_path):
 
     Parameters
     ----------
-    full_path
-        The full path to the requested object, eg /nlmumc/projects/P000000001/foo/bar/instance.json
+    full_path: str
+        The full path to the requested object, e.g: /nlmumc/projects/P000000001/foo/bar/instance.json
 
+    Returns
+    -------
+    bool
+        True, if the path is safe.
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a safe path.
     """
     split_path = full_path.split("/")
     # basedir => "/nlmumc/projects/P[0-9]{9}/C[0-9]{9}"
@@ -28,18 +37,26 @@ def validate_path_safety(basedir, path):
 
     Parameters
     ----------
-    basedir
-        The base path, eg /nlmumc/projects/P000000001
-    path
-        The path to the requested object, eg /nlmumc/projects/P000000001/instance.json
+    basedir: str
+        The base path, e.g: /nlmumc/projects/P000000001
+    path: str
+        The path to the requested object, e.g: /nlmumc/projects/P000000001/instance.json
 
+    Returns
+    -------
+    bool
+        True, if the path is safe.
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a safe path.
     """
     match_path = os.path.abspath(path)
     # if basedir == os.path.commonpath((basedir, match_path)): # NOT pyhton 2.7 compatible
     if basedir == commonpath([basedir, match_path]):
         return True
-    else:
-        raise exceptions.ValidationError("Path is not safe: {}".format(path))
+    raise exceptions.ValidationError("Path is not safe: {}".format(path))
 
 
 def validate_project_id(project_id):
@@ -48,14 +65,22 @@ def validate_project_id(project_id):
 
     Parameters
     ----------
-    project_id
-        The project id, eg P000000001
+    project_id: str
+        The project id, e.g: P000000001
 
+    Returns
+    -------
+    bool
+        True, if the project id is valid
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a valid project id.
     """
-    if type(project_id) == str and re.search("^P[0-9]{9}$", project_id) is not None:
+    if isinstance(project_id, str) and re.search("^P[0-9]{9}$", project_id) is not None:
         return True
-    else:
-        raise exceptions.ValidationError("Invalid project id {}".format(project_id))
+    raise exceptions.ValidationError("Invalid project id {}".format(project_id))
 
 
 def validate_project_path(project_path):
@@ -64,14 +89,22 @@ def validate_project_path(project_path):
 
     Parameters
     ----------
-    project_path
-        The project path, eg /nlmumc/projects/P000000001
+    project_path: str
+        The project path, e.g: /nlmumc/projects/P000000001
 
+    Returns
+    -------
+    bool
+        True, if the project path is valid.
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a valid project path.
     """
     if re.search("^/nlmumc/projects/P[0-9]{9}$", project_path) is not None:
         return True
-    else:
-        raise exceptions.ValidationError("Invalid project path {}".format(project_path))
+    raise exceptions.ValidationError("Invalid project path {}".format(project_path))
 
 
 def validate_collection_id(collection_id):
@@ -80,14 +113,22 @@ def validate_collection_id(collection_id):
 
     Parameters
     ----------
-    collection_id
-        The project id, eg C000000001
+    collection_id: str
+        The collection id, e.g: C000000001
 
+    Returns
+    -------
+    bool
+        True, if the collection id is valid.
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a valid collection id.
     """
     if re.search("^C[0-9]{9}$", collection_id) is not None:
         return True
-    else:
-        raise exceptions.ValidationError("Invalid collection id {}".format(collection_id))
+    raise exceptions.ValidationError("Invalid collection id {}".format(collection_id))
 
 
 def validate_project_collection_path(project_collection_path):
@@ -96,14 +137,22 @@ def validate_project_collection_path(project_collection_path):
 
     Parameters
     ----------
-    project_collection_path
-        The project path, eg /nlmumc/projects/P000000001/C000000001
+    project_collection_path: str
+        The project collection path, e.g: /nlmumc/projects/P000000001/C000000001
 
+    Returns
+    -------
+    bool
+        True, if the project collection path is valid.
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a valid project collection path.
     """
     if re.search("^/nlmumc/projects/P[0-9]{9}/C[0-9]{9}$", project_collection_path) is not None:
         return True
-    else:
-        raise exceptions.ValidationError("Invalid project collection path {}".format(project_collection_path))
+    raise exceptions.ValidationError("Invalid project collection path {}".format(project_collection_path))
 
 
 def validate_file_path(file_path):
@@ -112,34 +161,46 @@ def validate_file_path(file_path):
 
     Parameters
     ----------
-    file_path
-        The file path, eg /nlmumc/projects/P000000001/schema.json
+    file_path: str
+        The file path, e.g: /nlmumc/projects/P000000001/C000000001/schema.json
 
+    Returns
+    -------
+    bool
+        True, if the file path is valid.
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a valid file path.
     """
     if re.search("^/nlmumc/projects/P[0-9]{9}/C[0-9]{9}/", file_path) is not None:
         return True
-    else:
-        raise exceptions.ValidationError("Invalid file path {}".format(file_path))
+    raise exceptions.ValidationError("Invalid file path {}".format(file_path))
 
 
 def validate_dropzone_type(dropzone_type):
     """
-    Validate if the dropzone type is either 'mounted' or 'direct'
+    Validate if the dropzone type is either 'mounted' or 'direct'.
 
     Parameters
     ----------
     dropzone_type: str
-        The type of dropzone to create
+        The type of dropzone to create.
 
     Returns
     -------
-    True if valid, False if not
+    bool
+        True if valid, False if not
 
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a valid project path.
     """
     if dropzone_type in ["mounted", "direct"]:
         return True
-    else:
-        raise exceptions.ValidationError("Invalid dropzone type {}".format(dropzone_type))
+    raise exceptions.ValidationError("Invalid dropzone type {}".format(dropzone_type))
 
 
 def validate_irods_collection(path):
@@ -153,7 +214,8 @@ def validate_irods_collection(path):
 
     Returns
     -------
-    True if valid
+    bool
+        True if valid
 
     Raises
     -------
@@ -186,7 +248,8 @@ def validate_dropzone_token(token):
 
     Returns
     -------
-    True if valid
+    bool
+        True if valid
 
     Raises
     -------
@@ -196,8 +259,7 @@ def validate_dropzone_token(token):
     """
     if re.search(r"^\w+-\w+$", token) is not None:
         return True
-    else:
-        raise exceptions.ValidationError("Invalid dropzone token{}".format(token))
+    raise exceptions.ValidationError("Invalid dropzone token{}".format(token))
 
 
 def validate_metadata_version_number(version):
@@ -206,19 +268,20 @@ def validate_metadata_version_number(version):
 
     Parameters
     ----------
-    version:str
+    version: str|int
         The metadata version number to check
 
     Returns
     -------
-    True if valid
+    bool
+        True if valid
 
     Raises
     -------
     ValidationError
         Raises a ValidationError, if not valid.
     """
-    if type(version) == str and version.isdigit():
+    if isinstance(version, int) or (isinstance(version, str) and version.isdigit()):
         return True
     raise exceptions.ValidationError("Invalid version number {}".format(version))
 
