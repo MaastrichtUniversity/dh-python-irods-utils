@@ -1,5 +1,5 @@
 import re
-from dhpythonirodsutils import validators
+from dhpythonirodsutils import validators, exceptions
 
 
 def format_dropzone_path(token, dropzone_type):
@@ -21,10 +21,10 @@ def format_dropzone_path(token, dropzone_type):
     Raises
     -------
     ValidationError
-        Raises a ValidationError, if not a valid dropzone type
-        .
+        Raises a ValidationError, if not a valid dropzone type.
     """
     dropzone_path = None
+    validators.validate_dropzone_token(token)
     validators.validate_dropzone_type(dropzone_type)
     if dropzone_type == "mounted":
         dropzone_path = "/nlmumc/ingest/zones/{}".format(token)
@@ -46,8 +46,12 @@ def format_absolute_project_path(relative_path):
     -------
     str
         Absolute project path
-    """
 
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if the path is not safe.
+    """
     absolute_path = "/nlmumc/projects/{}".format(relative_path)
     validators.validate_full_path_safety(absolute_path)
     return absolute_path
@@ -73,7 +77,6 @@ def format_schema_dropzone_path(token, dropzone_type):
     -------
     ValidationError
         Raises a ValidationError, if not a valid dropzone type
-
     """
     dropzone_path = format_dropzone_path(token, dropzone_type)
     return "{}/schema.json".format(dropzone_path)
@@ -99,7 +102,6 @@ def format_instance_dropzone_path(token, dropzone_type):
     -------
     ValidationError
         Raises a ValidationError, if not a valid dropzone type
-
     """
     dropzone_path = format_dropzone_path(token, dropzone_type)
     return "{}/instance.json".format(dropzone_path)
@@ -112,9 +114,9 @@ def format_schema_collection_path(project_id, collection_id):
     Parameters
     ----------
     project_id : str
-        The project_id eg P00000001
+        The project_id e.g: P00000001
     collection_id : str
-        The collection_id eg C00000001
+        The collection_id e.g: C00000001
 
     Returns
     -------
@@ -125,7 +127,6 @@ def format_schema_collection_path(project_id, collection_id):
     -------
     ValidationError
         Raises a ValidationError, if not a valid project collection path
-
     """
     project_collection_path = format_project_collection_path(project_id, collection_id)
     return "{}/schema.json".format(project_collection_path)
@@ -138,9 +139,9 @@ def format_instance_collection_path(project_id, collection_id):
     Parameters
     ----------
     project_id : str
-        The project_id eg P00000001
+        The project_id e.g: P00000001
     collection_id : str
-        The collection_id eg C00000001
+        The collection_id e.g: C00000001
 
     Returns
     -------
@@ -151,7 +152,6 @@ def format_instance_collection_path(project_id, collection_id):
     -------
     ValidationError
         Raises a ValidationError, if not a valid project collection path
-
     """
     project_collection_path = format_project_collection_path(project_id, collection_id)
     return "{}/instance.json".format(project_collection_path)
@@ -164,11 +164,11 @@ def format_schema_versioned_collection_path(project_id, collection_id, version):
     Parameters
     ----------
     project_id : str
-        The project_id, eg P00000001
+        The project_id, e.g: P00000001
     collection_id : str
-        The collection_id, eg C00000001
+        The collection_id, e.g: C00000001
     version: str
-        The version number, eg 2
+        The version number, e.g: 2
 
     Returns
     -------
@@ -180,6 +180,7 @@ def format_schema_versioned_collection_path(project_id, collection_id, version):
     ValidationError
         Raises a ValidationError, if not a valid project collection path
     """
+    validators.validate_metadata_version_number(version)
     metadata_versions_path = format_metadata_versions_path(project_id, collection_id)
     return "{}/schema.{}.json".format(metadata_versions_path, version)
 
@@ -191,11 +192,11 @@ def format_instance_versioned_collection_path(project_id, collection_id, version
     Parameters
     ----------
     project_id : str
-        The project_id eg P00000001
+        The project_id e.g: P00000001
     collection_id : str
-        The collection_id eg C00000001
+        The collection_id e.g: C00000001
     version: str
-        The version number, eg 2
+        The version number, e.g: 2
 
     Returns
     -------
@@ -206,8 +207,8 @@ def format_instance_versioned_collection_path(project_id, collection_id, version
     -------
     ValidationError
         Raises a ValidationError, if not a valid project collection path
-
     """
+    validators.validate_metadata_version_number(version)
     metadata_versions_path = format_metadata_versions_path(project_id, collection_id)
     return "{}/instance.{}.json".format(metadata_versions_path, version)
 
@@ -219,9 +220,9 @@ def format_metadata_versions_path(project_id, collection_id):
     Parameters
     ----------
     project_id : str
-        The project_id eg P00000001
+        The project_id e.g: P00000001
     collection_id : str
-        The collection_id eg C00000001
+        The collection_id e.g: C00000001
 
     Returns
     -------
@@ -232,7 +233,6 @@ def format_metadata_versions_path(project_id, collection_id):
     -------
     ValidationError
         Raises a ValidationError, if not a valid project collection path
-
     """
     project_collection_path = format_project_collection_path(project_id, collection_id)
     return "{}/.metadata_versions".format(project_collection_path)
@@ -244,18 +244,18 @@ def format_project_path(project_id):
 
     Parameters
     ----------
-    project_id
-        The project id, eg P000000001
+    project_id: str
+        The project id, e.g: P000000001
 
     Returns
     -------
+    str
         The formatted path
 
     Raises
     -------
     ValidationError
         Raises a ValidationError, if not a valid project collection path
-
     """
     if validators.validate_project_id(project_id):
         return "/nlmumc/projects/{}".format(project_id)
@@ -267,50 +267,24 @@ def format_project_collection_path(project_id, collection_id):
 
     Parameters
     ----------
-    project_id
-        The project id, eg P000000001
-    collection_id
-        The collection id, eg C000000001
+    project_id: str
+        The project id, e.g: P000000001
+    collection_id: str
+        The collection id, e.g: C000000001
 
     Returns
     -------
+    str
         The formatted path
 
     Raises
     -------
     ValidationError
         Raises a ValidationError, if not a valid project collection path
-
     """
     project_collection_path = "/nlmumc/projects/{}/{}".format(project_id, collection_id)
     if validators.validate_project_collection_path(project_collection_path):
         return project_collection_path
-
-
-def get_project_path_from_project_collection_path(project_collection_path):
-    """
-    Return the project path from the projectcollection path
-
-    Parameters
-    ----------
-    project_collection_path
-        The full path of the project collection
-
-    Returns
-    -------
-        The project path or None
-
-    Raises
-    -------
-    ValidationError
-        Raises a ValidationError, if not a valid project path
-
-    """
-    match = re.search(r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/C[0-9]{9}/?", project_collection_path)
-    if match is not None:
-        return format_project_path(match.group("project"))
-    else:
-        return None
 
 
 def get_project_id_from_project_path(project_path):
@@ -325,13 +299,11 @@ def get_project_id_from_project_path(project_path):
     Returns
     -------
         The project id or None
-
     """
-    match = re.search(r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/?", project_path)
+    match = re.search(r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/?$", project_path)
     if match is not None:
         return match.group("project")
-    else:
-        return None
+    raise exceptions.ValidationError("Invalid project path {}".format(project_path))
 
 
 def get_project_id_from_project_collection_path(project_collection_path):
@@ -340,19 +312,47 @@ def get_project_id_from_project_collection_path(project_collection_path):
 
     Parameters
     ----------
-    project_collection_path
+    project_collection_path: str
         The full path of the project collection
 
     Returns
     -------
+    str
         The project id or None
-
     """
-    match = re.search(r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/C[0-9]{9}/?", project_collection_path)
+    match = re.search(
+        r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/(?P<collection>C[0-9]{9})?/?", project_collection_path
+    )
     if match is not None:
         return match.group("project")
-    else:
-        return None
+    raise exceptions.ValidationError("Invalid project collection path {}".format(project_collection_path))
+
+
+def get_project_path_from_project_collection_path(project_collection_path):
+    """
+    Return the project path from the projectcollection path
+
+    Parameters
+    ----------
+    project_collection_path: str
+        The full path of the project collection
+
+    Returns
+    -------
+    str
+        The project path or None
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not a valid project path
+    """
+    match = re.search(
+        r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/(?P<collection>C[0-9]{9})?/?", project_collection_path
+    )
+    if match is not None:
+        return format_project_path(match.group("project"))
+    raise exceptions.ValidationError("Invalid project collection path {}".format(project_collection_path))
 
 
 def get_collection_id_from_project_collection_path(project_collection_path):
@@ -361,19 +361,20 @@ def get_collection_id_from_project_collection_path(project_collection_path):
 
     Parameters
     ----------
-    project_collection_path
+    project_collection_path: str
         The full path of the project collection
 
     Returns
     -------
+    str
         The collection id
-
     """
-    match = re.search(r"^(/nlmumc/projects/)?(P[0-9]{9})/?(?P<collection>C[0-9]{9})/?", project_collection_path)
+    match = re.search(
+        r"^(/nlmumc/projects/)?(?P<project>P[0-9]{9})/?(?P<collection>C[0-9]{9})/?", project_collection_path
+    )
     if match is not None:
         return match.group("collection")
-    else:
-        return None
+    raise exceptions.ValidationError("Invalid project collection path {}".format(project_collection_path))
 
 
 def format_boolean_to_string(boolean):
@@ -382,18 +383,17 @@ def format_boolean_to_string(boolean):
 
     Parameters
     ----------
-    boolean
+    boolean: bool
         True or False
 
     Returns
     -------
+    str
         "true" if True, "false" if False
-
     """
     if boolean:
         return "true"
-    else:
-        return "false"
+    return "false"
 
 
 def format_string_to_boolean(string):
@@ -402,15 +402,14 @@ def format_string_to_boolean(string):
 
     Parameters
     ----------
-    string
+    string: str
         "true" or anything else
 
     Returns
     -------
+    bool
         True if "true", False if anything else
-
     """
     if string == "true":
         return True
-    else:
-        return False
+    return False
