@@ -1,5 +1,6 @@
 import re
 from dhpythonirodsutils import validators, exceptions
+from dhpythonirodsutils.enums import DropzoneState
 
 
 def format_dropzone_path(token, dropzone_type):
@@ -411,5 +412,23 @@ def format_string_to_boolean(string):
         True if "true", False if anything else
     """
     if string == "true":
+        return True
+    return False
+
+def get_is_dropzone_modifiable(state: DropzoneState):
+    """
+    Gets if the dropzone is modifiable (can ingest it, can edit it, can change its ACLs)
+
+    Parameters
+    ----------
+    state: DropzoneState
+        The state of the dropzone to check
+
+    Returns
+    -------
+    True if it is part of a specific list of states
+
+    """
+    if state in (DropzoneState.OPEN, DropzoneState.WARNING_VALIDATION_INCORRECT):
         return True
     return False
