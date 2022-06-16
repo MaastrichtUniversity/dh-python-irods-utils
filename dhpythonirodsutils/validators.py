@@ -285,6 +285,29 @@ def validate_metadata_version_number(version):
         return True
     raise exceptions.ValidationError("Invalid version number {}".format(version))
 
+def validate_string_boolean(string_boolean):
+    """
+    Checks if the string provided is able to be converted to a  legitimate boolean
+
+    Parameters
+    ----------
+    string_boolean: str
+        The string to check
+
+    Returns
+    -------
+    bool
+        True if valid
+
+    Raises
+    -------
+    ValidationError
+        Raises a ValidationError, if not valid.
+    """
+    if string_boolean not in ("true", "false"):
+        raise exceptions.ValidationError("Invalid boolean as string '{}'".format(string_boolean))
+
+    return True
 
 # Python 2.7 compatible version of  os.path.commonpath
 # According to http://rosettacode.org/wiki/Find_common_directory_path#Python
