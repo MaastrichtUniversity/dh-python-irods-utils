@@ -1,6 +1,7 @@
 import os
 import re
 from itertools import takewhile
+
 from dhpythonirodsutils import exceptions
 
 
@@ -285,9 +286,10 @@ def validate_metadata_version_number(version):
         return True
     raise exceptions.ValidationError("Invalid version number {}".format(version))
 
+
 def validate_string_boolean(string_boolean):
     """
-    Checks if the string provided is able to be converted to a  legitimate boolean
+    Checks if the string provided can be converted to a legitimate boolean
 
     Parameters
     ----------
@@ -308,6 +310,39 @@ def validate_string_boolean(string_boolean):
         raise exceptions.ValidationError("Invalid boolean as string '{}'".format(string_boolean))
 
     return True
+
+
+def validate_budget_number(budget_number):
+    """
+    Check if budget number follow the standard format:
+        * UM-{10} or UM-{11digits}[A-Z]
+        * AZM-{6digits}
+        * XXXXXXXXX if budget number is not specified
+
+    Parameters
+    ----------
+    budget_number: str
+        The budget number to validate
+
+    Returns
+    -------
+    bool
+        True if valid
+
+    Raises
+    ------
+    ValidationError
+        Raises a ValidationError if the budget number doesn't follow of the allowed format
+    """
+    if re.fullmatch(r"^UM-\d{10}$", budget_number) or re.fullmatch(r"^UM-\d{11}[A-Z]$", budget_number):
+        return True
+    if re.fullmatch(r"^AZM-\d{6}$", budget_number):
+        return True
+    if re.fullmatch(r"^XXXXXXXXX$", budget_number):
+        return True
+
+    raise exceptions.ValidationError("Invalid budget number as string '{}'".format(budget_number))
+
 
 # Python 2.7 compatible version of  os.path.commonpath
 # According to http://rosettacode.org/wiki/Find_common_directory_path#Python
