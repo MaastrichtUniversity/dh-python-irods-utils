@@ -295,3 +295,29 @@ def test_validate_metadata_version_number(version):
 def test_validate_metadata_version_number(version):
     with pytest.raises(ValidationError):
         validators.validate_metadata_version_number(version)
+
+@pytest.mark.parametrize(
+    "string_boolean",
+    [
+        "true",
+        "false",
+    ],
+)
+def test_validate_string_boolean(string_boolean):
+    assert validators.validate_string_boolean(string_boolean)
+
+
+@pytest.mark.parametrize(
+    "string_boolean",
+    [
+        "False",
+        "True",
+        "foobar",
+        "$#@#!#",
+        "gg",
+        "1234",
+    ],
+)
+def test_validate_string_boolean(string_boolean):
+    with pytest.raises(ValidationError):
+        validators.validate_string_boolean(string_boolean)
