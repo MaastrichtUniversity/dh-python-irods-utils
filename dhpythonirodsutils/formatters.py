@@ -1,4 +1,5 @@
 import re
+
 from dhpythonirodsutils import validators, exceptions
 from dhpythonirodsutils.enums import DropzoneState
 
@@ -415,6 +416,7 @@ def format_string_to_boolean(string):
         return True
     return False
 
+
 def get_is_dropzone_state_ingestable(state):
     """
     Gets if the dropzone is able to be ingested
@@ -433,6 +435,7 @@ def get_is_dropzone_state_ingestable(state):
         return True
     return False
 
+
 def get_is_dropzone_state_in_active_ingestion(state):
     """
     Gets if the dropzone is in active ingestion
@@ -447,6 +450,12 @@ def get_is_dropzone_state_in_active_ingestion(state):
     True if it is not a part of a specific list of states
 
     """
-    if state not in (DropzoneState.OPEN, DropzoneState.WARNING_VALIDATION_INCORRECT, DropzoneState.ERROR_INGESTION, DropzoneState.ERROR_POST_INGESTION, DropzoneState.INGESTED):
+    if state not in (
+        DropzoneState.OPEN,
+        DropzoneState.WARNING_VALIDATION_INCORRECT,
+        DropzoneState.ERROR_INGESTION,
+        DropzoneState.ERROR_POST_INGESTION,
+        DropzoneState.INGESTED,
+    ):
         return True
     return False
