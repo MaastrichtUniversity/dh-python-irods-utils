@@ -294,9 +294,14 @@ def test_format_string_to_boolean(string):
 
 @pytest.mark.parametrize(
     "state,expected_result",
-    [(DropzoneState.OPEN, True), (DropzoneState.WARNING_VALIDATION_INCORRECT, True),
-     (DropzoneState.ERROR_INGESTION, False), (DropzoneState.ERROR_POST_INGESTION, False),
-     (DropzoneState.INGESTED, False), (DropzoneState.INGESTING, False)],
+    [
+        (DropzoneState.OPEN, True),
+        (DropzoneState.WARNING_VALIDATION_INCORRECT, True),
+        (DropzoneState.ERROR_INGESTION, False),
+        (DropzoneState.ERROR_POST_INGESTION, False),
+        (DropzoneState.INGESTED, False),
+        (DropzoneState.INGESTING, False),
+    ],
 )
 def test_get_is_dropzone_state_ingestable(state, expected_result):
     assert formatters.get_is_dropzone_state_ingestable(state) is expected_result
@@ -304,10 +309,16 @@ def test_get_is_dropzone_state_ingestable(state, expected_result):
 
 @pytest.mark.parametrize(
     "state,expected_result",
-    [(DropzoneState.OPEN, False), (DropzoneState.WARNING_VALIDATION_INCORRECT, False),
-     (DropzoneState.ERROR_INGESTION, False), (DropzoneState.ERROR_POST_INGESTION, False),
-     (DropzoneState.INGESTED, False), (DropzoneState.INGESTING, True), (DropzoneState.IN_QUEUE_FOR_INGESTION, True),
-     (DropzoneState.VALIDATING, True)],
+    [
+        (DropzoneState.OPEN, False),
+        (DropzoneState.WARNING_VALIDATION_INCORRECT, False),
+        (DropzoneState.ERROR_INGESTION, False),
+        (DropzoneState.ERROR_POST_INGESTION, False),
+        (DropzoneState.INGESTED, False),
+        (DropzoneState.INGESTING, True),
+        (DropzoneState.IN_QUEUE_FOR_INGESTION, True),
+        (DropzoneState.VALIDATING, True),
+    ],
 )
 def test_get_is_dropzone_state_in_active_ingestion(state, expected_result):
     assert formatters.get_is_dropzone_state_in_active_ingestion(state) is expected_result

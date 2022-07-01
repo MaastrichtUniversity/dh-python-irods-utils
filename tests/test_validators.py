@@ -279,7 +279,7 @@ def test_validate_dropzone_token_invalid(token):
         "987564321",
     ],
 )
-def test_validate_metadata_version_number(version):
+def test_validate_metadata_version_number_valid(version):
     assert validators.validate_metadata_version_number(version)
 
 
@@ -292,9 +292,10 @@ def test_validate_metadata_version_number(version):
         ".987564321",
     ],
 )
-def test_validate_metadata_version_number(version):
+def test_validate_metadata_version_number_invalid(version):
     with pytest.raises(ValidationError):
         validators.validate_metadata_version_number(version)
+
 
 @pytest.mark.parametrize(
     "string_boolean",
@@ -303,7 +304,7 @@ def test_validate_metadata_version_number(version):
         "false",
     ],
 )
-def test_validate_string_boolean(string_boolean):
+def test_validate_string_boolean_valid(string_boolean):
     assert validators.validate_string_boolean(string_boolean)
 
 
@@ -318,6 +319,42 @@ def test_validate_string_boolean(string_boolean):
         "1234",
     ],
 )
-def test_validate_string_boolean(string_boolean):
+def test_validate_string_boolean_invalid(string_boolean):
     with pytest.raises(ValidationError):
         validators.validate_string_boolean(string_boolean)
+
+
+@pytest.mark.parametrize(
+    "budget_number",
+    [
+        "UM-12345678901B",
+        "UM-01234567890R",
+        "UM-12345678901N",
+        "UM-01234567890E",
+        "UM-01234567890A",
+        "UM-01234567890Z",
+        "UM-0123456789",
+        "XXXXXXXXX",
+        "AZM-012345",
+    ],
+)
+def test_validate_budget_number_valid(budget_number):
+    assert validators.validate_budget_number(budget_number)
+
+
+@pytest.mark.parametrize(
+    "budget_number",
+    [
+        "UM-12345678901b",
+        "UM-0123456789r",
+        "UM-12345678901.N",
+        "MU-01234567890E",
+        "UM-01234567890",
+        "hola",
+        "MUMC-012345",
+        1234567890,
+    ],
+)
+def test_validate_budget_number_invalid(budget_number):
+    with pytest.raises(ValidationError):
+        validators.validate_budget_number(str(budget_number))
