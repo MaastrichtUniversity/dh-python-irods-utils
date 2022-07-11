@@ -280,7 +280,7 @@ def test_validate_dropzone_token_invalid(token):
         "987564321",
     ],
 )
-def test_validate_metadata_version_number(version):
+def test_validate_metadata_version_number_valid(version):
     assert validators.validate_metadata_version_number(version)
 
 
@@ -293,7 +293,7 @@ def test_validate_metadata_version_number(version):
         ".987564321",
     ],
 )
-def test_validate_metadata_version_number(version):
+def test_validate_metadata_version_number_invalid(version):
     with pytest.raises(ValidationError):
         validators.validate_metadata_version_number(version)
 
