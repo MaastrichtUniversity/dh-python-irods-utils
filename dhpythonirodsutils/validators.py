@@ -3,6 +3,7 @@ import re
 from itertools import takewhile
 
 from dhpythonirodsutils import exceptions
+from dhpythonirodsutils.enums import ProjectCollectionActions
 
 
 def validate_full_path_safety(full_path):
@@ -28,6 +29,17 @@ def validate_full_path_safety(full_path):
     # basedir => "/nlmumc/projects/P[0-9]{9}/C[0-9]{9}"
     basedir = "/" + split_path[1] + "/" + split_path[2] + "/" + split_path[3] + "/" + split_path[4]
     return validate_path_safety(basedir, full_path)
+
+
+# Python 2.7 compatible version of  os.path.commonpath
+# According to http://rosettacode.org/wiki/Find_common_directory_path#Python
+def commonpath(paths, sep="/"):
+    bydirectorylevels = zip(*[p.split(sep) for p in paths])
+    return sep.join(x[0] for x in takewhile(allnamesequal, bydirectorylevels))
+
+
+def allnamesequal(name):
+    return all(n == name[0] for n in name[1:])
 
 
 # https://security.openstack.org/guidelines/dg_using-file-paths.html
@@ -344,12 +356,52 @@ def validate_budget_number(budget_number):
     raise exceptions.ValidationError("Invalid budget number as string '{}'".format(budget_number))
 
 
-# Python 2.7 compatible version of  os.path.commonpath
-# According to http://rosettacode.org/wiki/Find_common_directory_path#Python
-def commonpath(paths, sep="/"):
-    bydirectorylevels = zip(*[p.split(sep) for p in paths])
-    return sep.join(x[0] for x in takewhile(allnamesequal, bydirectorylevels))
+def validate_project_collection_action_name(action):
+    """
+    Check if the action name matches with one of the Enum ProjectCollectionActions names
+
+    Parameters
+    ----------
+    action: str
+        The action name to check
+
+    Returns
+    -------
+    bool
+        True, if valid
+
+    Raises
+    ------
+    ValidationError
+        Raises a ValidationError if the action is not part of the Enum ProjectCollectionActions
+    """
+    try:
+        ProjectCollectionActions[action].value
+    except KeyError:
+        raise exceptions.ValidationError("Invalid ProjectCollectionActions '{}'".format(action))
+
+    return True
 
 
-def allnamesequal(name):
-    return all(n == name[0] for n in name[1:])
+def validate_project_collections_action_avu(attribute):
+    """
+    Check if the project AVU attribute matches with one of the Enum ProjectCollectionActions values.
+
+    Parameters
+    ----------
+    attribute: str
+        The project AVU attribute to check
+
+    Returns
+    -------
+    bool
+        True, if valid
+
+    Raises
+    ------
+    ValidationError
+        Raises a ValidationError if the action is not part of the Enum ProjectCollectionActions
+    """
+    if attribute in [actions.value for actions in ProjectCollectionActions]:
+        return True
+    raise exceptions.ValidationError("Invalid ProjectCollectionActions AVU '{}'".format(attribute))
