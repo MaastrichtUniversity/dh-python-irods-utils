@@ -1,7 +1,9 @@
 import os
 import re
 from itertools import takewhile
+
 from dhpythonirodsutils import exceptions
+from dhpythonirodsutils.enums import ProjectCollectionActions
 
 
 def validate_full_path_safety(full_path):
@@ -27,6 +29,17 @@ def validate_full_path_safety(full_path):
     # basedir => "/nlmumc/projects/P[0-9]{9}/C[0-9]{9}"
     basedir = "/" + split_path[1] + "/" + split_path[2] + "/" + split_path[3] + "/" + split_path[4]
     return validate_path_safety(basedir, full_path)
+
+
+# Python 2.7 compatible version of  os.path.commonpath
+# According to http://rosettacode.org/wiki/Find_common_directory_path#Python
+def commonpath(paths, sep="/"):
+    bydirectorylevels = zip(*[p.split(sep) for p in paths])
+    return sep.join(x[0] for x in takewhile(allnamesequal, bydirectorylevels))
+
+
+def allnamesequal(name):
+    return all(n == name[0] for n in name[1:])
 
 
 # https://security.openstack.org/guidelines/dg_using-file-paths.html
@@ -285,9 +298,10 @@ def validate_metadata_version_number(version):
         return True
     raise exceptions.ValidationError("Invalid version number {}".format(version))
 
+
 def validate_string_boolean(string_boolean):
     """
-    Checks if the string provided is able to be converted to a  legitimate boolean
+    Checks if the string provided can be converted to a legitimate boolean
 
     Parameters
     ----------
@@ -309,12 +323,85 @@ def validate_string_boolean(string_boolean):
 
     return True
 
-# Python 2.7 compatible version of  os.path.commonpath
-# According to http://rosettacode.org/wiki/Find_common_directory_path#Python
-def commonpath(paths, sep="/"):
-    bydirectorylevels = zip(*[p.split(sep) for p in paths])
-    return sep.join(x[0] for x in takewhile(allnamesequal, bydirectorylevels))
+
+def validate_budget_number(budget_number):
+    """
+    Check if budget number follow the standard format:
+        * UM-{10} or UM-{11digits}[A-Z]
+        * AZM-{6digits}
+        * XXXXXXXXX if budget number is not specified
+
+    Parameters
+    ----------
+    budget_number: str
+        The budget number to validate
+
+    Returns
+    -------
+    bool
+        True if valid
+
+    Raises
+    ------
+    ValidationError
+        Raises a ValidationError if the budget number doesn't follow of the allowed format
+    """
+    if re.fullmatch(r"^UM-\d{10}$", budget_number) or re.fullmatch(r"^UM-\d{11}[A-Z]$", budget_number):
+        return True
+    if re.fullmatch(r"^AZM-\d{6}$", budget_number):
+        return True
+    if re.fullmatch(r"^XXXXXXXXX$", budget_number):
+        return True
+
+    raise exceptions.ValidationError("Invalid budget number as string '{}'".format(budget_number))
 
 
-def allnamesequal(name):
-    return all(n == name[0] for n in name[1:])
+def validate_project_collection_action_name(action):
+    """
+    Check if the action name matches with one of the Enum ProjectCollectionActions names
+
+    Parameters
+    ----------
+    action: str
+        The action name to check
+
+    Returns
+    -------
+    bool
+        True, if valid
+
+    Raises
+    ------
+    ValidationError
+        Raises a ValidationError if the action is not part of the Enum ProjectCollectionActions
+    """
+    try:
+        ProjectCollectionActions[action].value
+    except KeyError:
+        raise exceptions.ValidationError("Invalid ProjectCollectionActions '{}'".format(action))
+
+    return True
+
+
+def validate_project_collections_action_avu(attribute):
+    """
+    Check if the project AVU attribute matches with one of the Enum ProjectCollectionActions values.
+
+    Parameters
+    ----------
+    attribute: str
+        The project AVU attribute to check
+
+    Returns
+    -------
+    bool
+        True, if valid
+
+    Raises
+    ------
+    ValidationError
+        Raises a ValidationError if the action is not part of the Enum ProjectCollectionActions
+    """
+    if attribute in [actions.value for actions in ProjectCollectionActions]:
+        return True
+    raise exceptions.ValidationError("Invalid ProjectCollectionActions AVU '{}'".format(attribute))

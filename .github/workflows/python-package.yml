@@ -42,4 +42,38 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-        
+    - name: Report Status to Dean
+      if: ${{ always() && github.event.pusher.name == 'deanlinssen' }}
+      uses: ravsamhq/notify-slack-action@master
+      with:
+        status: ${{ job.status }}
+        notify_when: 'failure'
+        mention_users: ${{ secrets.SLACK_DEAN_ID }}
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PROD_WEBHOOK }}
+    - name: Report Status to Daniel
+      if: ${{ always() && github.event.pusher.name == 'danieltheunissen' }}
+      uses: ravsamhq/notify-slack-action@master
+      with:
+        status: ${{ job.status }}
+        notify_when: 'failure'
+        mention_users: ${{ secrets.SLACK_DANIEL_ID }}
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PROD_WEBHOOK }}
+    - name: Report Status to Jonathan
+      if: ${{ always() && github.event.pusher.name  == 'JonathanMELIUS' }}
+      uses: ravsamhq/notify-slack-action@master
+      with:
+        status: ${{ job.status }}
+        notify_when: 'failure'
+        mention_users: ${{ secrets.SLACK_JONATHAN_ID }}
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PROD_WEBHOOK }}
+    - name: Report Status general
+      if: ${{ always() && github.event.pusher.name != 'deanlinssen' && github.event.pusher.name != 'danieltheunissen' && github.event.pusher.name != 'JonathanMELIUS' }}
+      uses: ravsamhq/notify-slack-action@master
+      with:
+        status: ${{ job.status }}
+        notify_when: 'failure'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PROD_WEBHOOK }}
