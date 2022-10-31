@@ -1,3 +1,4 @@
+"""This module contains the helpers function to format diverse type of inputs"""
 import re
 
 from dhpythonirodsutils import validators, exceptions
@@ -259,8 +260,8 @@ def format_project_path(project_id):
     ValidationError
         Raises a ValidationError, if not a valid project collection path
     """
-    if validators.validate_project_id(project_id):
-        return "/nlmumc/projects/{}".format(project_id)
+    validators.validate_project_id(project_id)
+    return "/nlmumc/projects/{}".format(project_id)
 
 
 def format_project_collection_path(project_id, collection_id):
@@ -285,8 +286,8 @@ def format_project_collection_path(project_id, collection_id):
         Raises a ValidationError, if not a valid project collection path
     """
     project_collection_path = "/nlmumc/projects/{}/{}".format(project_id, collection_id)
-    if validators.validate_project_collection_path(project_collection_path):
-        return project_collection_path
+    validators.validate_project_collection_path(project_collection_path)
+    return project_collection_path
 
 
 def get_project_id_from_project_path(project_path):

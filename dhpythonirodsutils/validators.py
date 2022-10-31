@@ -1,3 +1,4 @@
+"""This module contains the helpers function to validate diverse type of inputs"""
 import os
 import re
 from itertools import takewhile

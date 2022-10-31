@@ -1,7 +1,9 @@
+"""This module contains the enum classes for diverse entities"""
 from enum import Enum
 
 
 class DropzoneState(Enum):
+    """Enumerate the all possible DropZone state AVUs in iRODS"""
     OPEN = "open"
     VALIDATING = "validating"
     IN_QUEUE_FOR_INGESTION = "in-queue-for-ingestion"
@@ -13,6 +15,7 @@ class DropzoneState(Enum):
 
 
 class ProjectAVUs(Enum):
+    """Enumerate the all possible Project AVUs in iRODS"""
     ARCHIVE_DESTINATION_RESOURCE = "archiveDestinationResource"
     AUTHORIZATION_PERIOD_END_DATE = "authorizationPeriodEndDate"
     COLLECTION_METADATA_SCHEMAS = "collectionMetadataSchemas"
@@ -32,6 +35,7 @@ class ProjectAVUs(Enum):
 
 
 class ProjectCollectionActions(Enum):
+    """Enumerate the all possible project collection actions in MDR"""
     ARCHIVE = ProjectAVUs.ENABLE_ARCHIVE.value
     BROWSE = "BROWSE"
     # EDIT_METADATA = ProjectAVUs.ENABLE_CONTRIBUTOR_EDIT_METADATA.value
@@ -40,6 +44,7 @@ class ProjectCollectionActions(Enum):
 
 
 class AuditTailTopics(Enum):
+    """Enumerate the all possible Audit trail topics in logs"""
     ARCHIVE = "ARCHIVE"
     CHANGE_COLLECTION_METADATA_SCHEMA = "CHANGE_COLLECTION_METADATA_SCHEMA"
     CHANGE_PROJECT_AVU = "CHANGE_PROJECT_AVU"

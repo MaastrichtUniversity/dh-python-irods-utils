@@ -1,3 +1,4 @@
+"""This module contains a parser helper function"""
 import re
 from datetime import datetime
 
