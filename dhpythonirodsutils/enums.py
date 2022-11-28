@@ -21,6 +21,7 @@ class ProjectAVUs(Enum):
     COLLECTION_METADATA_SCHEMAS = "collectionMetadataSchemas"
     DATA_RETENTION_PERIOD_END_DATE = "dataRetentionPeriodEndDate"
     DATA_STEWARD = "dataSteward"
+    DESCRIPTION = "description"
     ENABLE_ARCHIVE = "enableArchive"
     ENABLE_CONTRIBUTOR_EDIT_METADATA = "enableContributorEditMetadata"
     ENABLE_DROPZONE_SHARING = "enableDropzoneSharing"
