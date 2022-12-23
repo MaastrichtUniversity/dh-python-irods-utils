@@ -1,3 +1,6 @@
+"""This module contains a custom exception class"""
+
+
 class ValidationError(Exception):
     """Exception raised for errors during validation
 

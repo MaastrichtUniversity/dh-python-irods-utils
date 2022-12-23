@@ -1,3 +1,4 @@
+"""This module contains the helpers function which standardize the way to log messages"""
 import datetime
 
 
@@ -83,7 +84,7 @@ def format_audit_trail_message(user_id, topic, event):
     str
         The string of the formatted audit trail log message.
     """
-    if type(user_id) != int:
+    if not isinstance(user_id, int):
         user_id = ""
     return "[%s][AUDIT_TRAIL][%s][%s] - %s" % (
         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S%z"),
