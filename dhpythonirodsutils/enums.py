@@ -3,7 +3,7 @@ from enum import Enum
 
 
 class DropzoneState(Enum):
-    """Enumerate the all possible DropZone state AVUs in iRODS"""
+    """Enumerate all the possible DropZone states AVUs in iRODS"""
 
     OPEN = "open"
     VALIDATING = "validating"
@@ -15,8 +15,9 @@ class DropzoneState(Enum):
     INGESTED = "ingested"
 
 
+# region Projects
 class ProjectAVUs(Enum):
-    """Enumerate the all possible Project AVUs in iRODS"""
+    """Enumerate all the possible Project AVUs in iRODS"""
 
     ARCHIVE_DESTINATION_RESOURCE = "archiveDestinationResource"
     AUTHORIZATION_PERIOD_END_DATE = "authorizationPeriodEndDate"
@@ -47,6 +48,7 @@ class ProjectCollectionActions(Enum):
     UNARCHIVE = ProjectAVUs.ENABLE_UNARCHIVE.value
 
 
+# endregion
 class AuditTailTopics(Enum):
     """Enumerate the all possible Audit trail topics in logs"""
 
@@ -72,3 +74,34 @@ class AuditTailTopics(Enum):
     VIEW_METADATA = "VIEW_METADATA"
     DRAG_AND_DROP = "DRAG_AND_DROP"
     SEARCH = "SEARCH"
+
+
+# region Active process
+class ProcessAttribute(Enum):
+    """Enumerate all active process attribute names"""
+
+    ARCHIVE = "archiveState"
+    UNARCHIVE = "unArchiveState"
+    EXPORTER = "exporterState"
+    # INGEST = "state"
+
+
+class ProcessType(Enum):
+    """Enumerate the type of project collection process type"""
+
+    ARCHIVE = "archive"
+    DROP_ZONE = "drop_zone"
+    EXPORT = "export"
+    UNARCHIVE = "unarchive"
+
+
+class ProcessState(Enum):
+    """Enumerate the type of project collection process type"""
+
+    COMPLETED = "completed"
+    ERROR = "error"
+    IN_PROGRESS = "in_progress"
+    OPEN = "open"
+
+
+# endregion
