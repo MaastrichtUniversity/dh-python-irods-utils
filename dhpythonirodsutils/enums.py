@@ -74,6 +74,7 @@ class AuditTailTopics(Enum):
     VIEW_METADATA = "VIEW_METADATA"
     DRAG_AND_DROP = "DRAG_AND_DROP"
     SEARCH = "SEARCH"
+    INTEGRATED_HELP = "INTEGRATED_HELP"
 
 
 # region Active process
