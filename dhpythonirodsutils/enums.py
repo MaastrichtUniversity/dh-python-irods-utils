@@ -31,6 +31,7 @@ class ProjectAVUs(Enum):
     ENABLE_OPEN_ACCESS_EXPORT = "enableOpenAccessExport"
     ENABLE_UNARCHIVE = "enableUnarchive"
     INGEST_RESOURCE = "ingestResource"
+    LATEST_PROJECT_COLLECTION_NUMBER = "latestProjectCollectionNumber"
     PRINCIPAL_INVESTIGATOR = "OBI:0000103"
     RESOURCE = "resource"
     RESPONSIBLE_COST_CENTER = "responsibleCostCenter"
