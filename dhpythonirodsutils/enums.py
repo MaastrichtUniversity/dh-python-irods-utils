@@ -47,6 +47,7 @@ class ProjectCollectionActions(Enum):
     # EDIT_METADATA = ProjectAVUs.ENABLE_CONTRIBUTOR_EDIT_METADATA.value
     PUBLISH = ProjectAVUs.ENABLE_OPEN_ACCESS_EXPORT.value
     UNARCHIVE = ProjectAVUs.ENABLE_UNARCHIVE.value
+    DELETE = "DELETE"
 
 
 # endregion
