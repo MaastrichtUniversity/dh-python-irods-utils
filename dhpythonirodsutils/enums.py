@@ -50,6 +50,8 @@ class ProjectCollectionActions(Enum):
 
 
 # endregion
+
+
 class AuditTailTopics(Enum):
     """Enumerate the all possible Audit trail topics in logs"""
 
@@ -105,6 +107,25 @@ class ProcessState(Enum):
     ERROR = "error"
     IN_PROGRESS = "in_progress"
     OPEN = "open"
+
+
+# endregion
+
+
+# region Active process
+class DataDeletionAttribute(Enum):
+    """Enumerate all data project (collection) attribute names"""
+
+    DESCRIPTION = "deletionReasonDescription"
+    REASON = "deletionReason"
+    STATE = "deletionState"
+
+
+class DataDeletionState(Enum):
+    """Enumerate all the possible project (collection) values for 'DataDeletionAttribute.STATE'"""
+
+    DELETED = "deleted"
+    PENDING = "pending-for-deletion"
 
 
 # endregion
