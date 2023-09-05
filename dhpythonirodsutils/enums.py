@@ -31,6 +31,7 @@ class ProjectAVUs(Enum):
     ENABLE_OPEN_ACCESS_EXPORT = "enableOpenAccessExport"
     ENABLE_UNARCHIVE = "enableUnarchive"
     INGEST_RESOURCE = "ingestResource"
+    LATEST_PROJECT_COLLECTION_NUMBER = "latestProjectCollectionNumber"
     PRINCIPAL_INVESTIGATOR = "OBI:0000103"
     RESOURCE = "resource"
     RESPONSIBLE_COST_CENTER = "responsibleCostCenter"
@@ -46,9 +47,12 @@ class ProjectCollectionActions(Enum):
     # EDIT_METADATA = ProjectAVUs.ENABLE_CONTRIBUTOR_EDIT_METADATA.value
     PUBLISH = ProjectAVUs.ENABLE_OPEN_ACCESS_EXPORT.value
     UNARCHIVE = ProjectAVUs.ENABLE_UNARCHIVE.value
+    DELETE = "DELETE"
 
 
 # endregion
+
+
 class AuditTailTopics(Enum):
     """Enumerate the all possible Audit trail topics in logs"""
 
@@ -61,6 +65,7 @@ class AuditTailTopics(Enum):
     CREATE_DROPZONE = "CREATE_DROPZONE"
     CREATE_PROJECT = "CREATE_PROJECT"
     DELETE_DROPZONE = "DELETE_DROPZONE"
+    DELETE_COLLECTION = "DELETE_COLLECTION"
     DOWNLOAD_DATA = "DOWNLOAD_DATA"
     EDIT_COLLECTION_METADATA = "EDIT_COLLECTION_METADATA"
     EXPORT_DATAVERSE = "EXPORT_DATAVERSE"
@@ -104,6 +109,25 @@ class ProcessState(Enum):
     ERROR = "error"
     IN_PROGRESS = "in_progress"
     OPEN = "open"
+
+
+# endregion
+
+
+# region Active process
+class DataDeletionAttribute(Enum):
+    """Enumerate all data project (collection) attribute names"""
+
+    DESCRIPTION = "deletionReasonDescription"
+    REASON = "deletionReason"
+    STATE = "deletionState"
+
+
+class DataDeletionState(Enum):
+    """Enumerate all the possible project (collection) values for 'DataDeletionAttribute.STATE'"""
+
+    DELETED = "deleted"
+    PENDING = "pending-for-deletion"
 
 
 # endregion
