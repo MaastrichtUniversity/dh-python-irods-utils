@@ -48,6 +48,11 @@ class ProjectCollectionActions(Enum):
     PUBLISH = ProjectAVUs.ENABLE_OPEN_ACCESS_EXPORT.value
     UNARCHIVE = ProjectAVUs.ENABLE_UNARCHIVE.value
     DELETE = "DELETE"
+
+
+class ProjectActions(Enum):
+    """Enumerate the all possible project actions in MDR"""
+
     DELETE_PROJECT = "DELETE_PROJECT"
 
 
