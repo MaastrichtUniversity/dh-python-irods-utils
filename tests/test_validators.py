@@ -367,7 +367,6 @@ def test_validate_budget_number_invalid(budget_number):
         "ARCHIVE",
         "UNARCHIVE",
         "BROWSE",
-        "PUBLISH",
     ],
 )
 def test_validate_project_collection_action_name_valid(action):
