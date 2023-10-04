@@ -28,7 +28,6 @@ class ProjectAVUs(Enum):
     ENABLE_ARCHIVE = "enableArchive"
     ENABLE_CONTRIBUTOR_EDIT_METADATA = "enableContributorEditMetadata"
     ENABLE_DROPZONE_SHARING = "enableDropzoneSharing"
-    ENABLE_OPEN_ACCESS_EXPORT = "enableOpenAccessExport"
     ENABLE_UNARCHIVE = "enableUnarchive"
     INGEST_RESOURCE = "ingestResource"
     LATEST_PROJECT_COLLECTION_NUMBER = "latestProjectCollectionNumber"

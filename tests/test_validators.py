@@ -392,7 +392,6 @@ def test_validate_project_collection_action_name_invalid(action):
         ProjectAVUs.ENABLE_ARCHIVE.value,
         ProjectAVUs.ENABLE_UNARCHIVE.value,
         "BROWSE",
-        ProjectAVUs.ENABLE_OPEN_ACCESS_EXPORT.value,
     ],
 )
 def test_validate_project_collections_action_avu_valid(attribute):
@@ -479,7 +478,6 @@ def test_validate_project_collection_action_name_invalid(action):
         ProjectAVUs.ENABLE_ARCHIVE.value,
         ProjectAVUs.ENABLE_UNARCHIVE.value,
         "BROWSE",
-        ProjectAVUs.ENABLE_OPEN_ACCESS_EXPORT.value,
     ],
 )
 def test_validate_project_collections_action_avu_valid(attribute):
