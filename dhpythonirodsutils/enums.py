@@ -93,7 +93,6 @@ class ProcessAttribute(Enum):
 
     ARCHIVE = "archiveState"
     UNARCHIVE = "unArchiveState"
-    EXPORTER = "exporterState"
     # INGEST = "state"
 
 
@@ -102,7 +101,6 @@ class ProcessType(Enum):
 
     ARCHIVE = "archive"
     DROP_ZONE = "drop_zone"
-    EXPORT = "export"
     UNARCHIVE = "unarchive"
 
 
