@@ -28,7 +28,6 @@ class ProjectAVUs(Enum):
     ENABLE_ARCHIVE = "enableArchive"
     ENABLE_CONTRIBUTOR_EDIT_METADATA = "enableContributorEditMetadata"
     ENABLE_DROPZONE_SHARING = "enableDropzoneSharing"
-    ENABLE_OPEN_ACCESS_EXPORT = "enableOpenAccessExport"
     ENABLE_UNARCHIVE = "enableUnarchive"
     INGEST_RESOURCE = "ingestResource"
     LATEST_PROJECT_COLLECTION_NUMBER = "latestProjectCollectionNumber"
@@ -44,8 +43,6 @@ class ProjectCollectionActions(Enum):
 
     ARCHIVE = ProjectAVUs.ENABLE_ARCHIVE.value
     BROWSE = "BROWSE"
-    # EDIT_METADATA = ProjectAVUs.ENABLE_CONTRIBUTOR_EDIT_METADATA.value
-    PUBLISH = ProjectAVUs.ENABLE_OPEN_ACCESS_EXPORT.value
     UNARCHIVE = ProjectAVUs.ENABLE_UNARCHIVE.value
     DELETE = "DELETE"
 
@@ -75,7 +72,6 @@ class AuditTailTopics(Enum):
     DELETE_PROJECT = "DELETE_PROJECT"
     DOWNLOAD_DATA = "DOWNLOAD_DATA"
     EDIT_COLLECTION_METADATA = "EDIT_COLLECTION_METADATA"
-    EXPORT_DATAVERSE = "EXPORT_DATAVERSE"
     INGEST = "INGEST"
     LIST_CO = "LIST_CO"
     LOGIN = "LOGIN"
@@ -96,7 +92,6 @@ class ProcessAttribute(Enum):
 
     ARCHIVE = "archiveState"
     UNARCHIVE = "unArchiveState"
-    EXPORTER = "exporterState"
     # INGEST = "state"
 
 
@@ -105,7 +100,6 @@ class ProcessType(Enum):
 
     ARCHIVE = "archive"
     DROP_ZONE = "drop_zone"
-    EXPORT = "export"
     UNARCHIVE = "unarchive"
 
 
