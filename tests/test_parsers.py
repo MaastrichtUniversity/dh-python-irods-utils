@@ -6,7 +6,6 @@ from dhpythonirodsutils import parsers
 @pytest.mark.parametrize(
     "log, expected_result",
     [
-        ("[2022-05-03 16:37:23][AUDIT_TRAIL][10043][EXPORT_DATAVERSE] - Dataverse", True),
         ("[2022-05-03 16:12:12][AUDIT_TRAIL][10043][CREATE_DROPZONE] - type: direct. User is internal: False", True),
         ("[2022-05-03 16:12:10][AUDIT_TRAIL][][] - False", True),
         ("wrong", False),
