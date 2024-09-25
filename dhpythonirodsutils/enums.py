@@ -31,6 +31,7 @@ class UnarchiveState(Enum):
     IN_QUEUE_FOR_UNARCHIVAL = "in-queue-for-unarchival"
     NUMBER_OF_FILES_OFFLINE = "Number of files offline: {}"
     CACHING_FILES_COUNTDOWN = "Caching files countdown: {}"
+    START_TRANSFER = "start-transfer"
     UNARCHIVE_IN_PROGESS = "unarchive-in-progress {}/{}"
     ERROR_UNARCHIVE_FAILED = "error-unarchive-failed"
     UNARCHIVE_DONE = "unarchive-done"
