@@ -15,6 +15,27 @@ class DropzoneState(Enum):
     INGESTED = "ingested"
 
 
+class ArchiveState(Enum):
+    """Enumerate all the possible archival state AVUs in iRODS"""
+
+    IN_QUEUE_FOR_ARCHIVAL = "in-queue-for-archival"
+    NUMBER_OF_FILES_FOUND = "Number of files found: {}"
+    ARCHIVE_IN_PROGESS = "archive-in-progress {}/{}"
+    ERROR_ARCHIVE_FAILED = "error-archive-failed"
+    ARCHIVE_DONE = "archive-done"
+
+
+class UnarchiveState(Enum):
+    """Enumerate all the possible unarchival state AVUs in iRODS"""
+
+    IN_QUEUE_FOR_UNARCHIVAL = "in-queue-for-unarchival"
+    NUMBER_OF_FILES_OFFLINE = "Number of files offline: {}"
+    CACHING_FILES_COUNTDOWN = "Caching files countdown: {}"
+    UNARCHIVE_IN_PROGESS = "unarchive-in-progress {}/{}"
+    ERROR_UNARCHIVE_FAILED = "error-unarchive-failed"
+    UNARCHIVE_DONE = "unarchive-done"
+
+
 # region Projects
 class ProjectAVUs(Enum):
     """Enumerate all the possible Project AVUs in iRODS"""
