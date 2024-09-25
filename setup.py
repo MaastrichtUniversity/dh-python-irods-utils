@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dh-python-irods-utils",
-    version="1.2.0",
+    version="1.2.1",
     author="DataHub",
     author_email="author@example.com",
     description="This is where we store all the python helper functions for iRODS",
