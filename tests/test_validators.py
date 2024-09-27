@@ -335,6 +335,7 @@ def test_validate_string_boolean_invalid(string_boolean):
         "UM-01234567890A",
         "UM-01234567890Z",
         "UM-0123456789",
+        "UM-A/12345678901N.001",
         "XXXXXXXXX",
         "AZM-012345",
     ],
@@ -351,6 +352,9 @@ def test_validate_budget_number_valid(budget_number):
         "UM-12345678901.N",
         "MU-01234567890E",
         "UM-01234567890",
+        "UM-A/12345678901N.0001",
+        "UM-A/12345678901N0001",
+        "UM-A.12345678901N0001",
         "hola",
         "MUMC-012345",
         1234567890,
@@ -406,92 +410,6 @@ def test_validate_project_collections_action_avu_valid(attribute):
         0.0,
     ],
 )
-def test_validate_project_collections_action_avu_valid(attribute):
-    with pytest.raises(ValidationError):
-        validators.validate_project_collections_action_avu(attribute)
-
-
-@pytest.mark.parametrize(
-    "budget_number",
-    [
-        "UM-12345678901B",
-        "UM-01234567890R",
-        "UM-12345678901N",
-        "UM-01234567890E",
-        "UM-01234567890A",
-        "UM-01234567890Z",
-        "UM-0123456789",
-        "XXXXXXXXX",
-        "AZM-012345",
-    ],
-)
-def test_validate_budget_number_valid(budget_number):
-    assert validators.validate_budget_number(budget_number)
-
-
-@pytest.mark.parametrize(
-    "budget_number",
-    [
-        "UM-12345678901b",
-        "UM-0123456789r",
-        "UM-12345678901.N",
-        "MU-01234567890E",
-        "UM-01234567890",
-        "hola",
-        "MUMC-012345",
-        1234567890,
-    ],
-)
-def test_validate_budget_number_invalid(budget_number):
-    with pytest.raises(ValidationError):
-        validators.validate_budget_number(str(budget_number))
-
-
-@pytest.mark.parametrize(
-    "action",
-    [
-        "ARCHIVE",
-        "UNARCHIVE",
-        "BROWSE",
-    ],
-)
-def test_validate_project_collection_action_name_valid(action):
-    assert validators.validate_project_collection_action_name(action)
-
-
-@pytest.mark.parametrize(
-    "action",
-    [
-        "WRONG",
-        42,
-        0.0,
-    ],
-)
-def test_validate_project_collection_action_name_invalid(action):
-    with pytest.raises(ValidationError):
-        validators.validate_project_collection_action_name(action)
-
-
-@pytest.mark.parametrize(
-    "attribute",
-    [
-        ProjectAVUs.ENABLE_ARCHIVE.value,
-        ProjectAVUs.ENABLE_UNARCHIVE.value,
-        "BROWSE",
-    ],
-)
-def test_validate_project_collections_action_avu_valid(attribute):
-    assert validators.validate_project_collections_action_avu(attribute)
-
-
-@pytest.mark.parametrize(
-    "attribute",
-    [
-        "WRONG",
-        42,
-        0.0,
-    ],
-)
-def test_validate_project_collections_action_avu_valid(attribute):
+def test_validate_project_collections_action_avu_invalid(attribute):
     with pytest.raises(ValidationError):
         validators.validate_project_collections_action_avu(attribute)
