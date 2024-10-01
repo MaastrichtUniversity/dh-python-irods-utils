@@ -328,7 +328,7 @@ def validate_string_boolean(string_boolean):
 def validate_budget_number(budget_number):
     """
     Check if budget number follow the standard format:
-        * UM-{10} or UM-{11digits}[A-Z]
+        * UM-{10} or UM-{11digits}[A-Z] or UM-{A-Z}/{11digits}{A-Z}.{3digits}
         * AZM-{6digits}
         * XXXXXXXXX if budget number is not specified
 
@@ -347,7 +347,11 @@ def validate_budget_number(budget_number):
     ValidationError
         Raises a ValidationError if the budget number doesn't follow of the allowed format
     """
-    if re.fullmatch(r"^UM-\d{10}$", budget_number) or re.fullmatch(r"^UM-\d{11}[A-Z]$", budget_number):
+    if (
+        re.fullmatch(r"^UM-\d{10}$", budget_number)
+        or re.fullmatch(r"^UM-\d{11}[A-Z]$", budget_number)
+        or re.fullmatch(r"^UM-[A-Z]/\d{11}[A-Z]\.\d{3}$", budget_number)
+    ):
         return True
     if re.fullmatch(r"^AZM-\d{6}$", budget_number):
         return True
