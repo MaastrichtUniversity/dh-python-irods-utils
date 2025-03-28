@@ -432,7 +432,7 @@ def get_is_dropzone_state_ingestable(state):
     True if it is part of a specific list of states
 
     """
-    if state in (DropzoneState.OPEN, DropzoneState.WARNING_VALIDATION_INCORRECT):
+    if state in (DropzoneState.OPEN, DropzoneState.WARNING_VALIDATION_INCORRECT, DropzoneState.WARNING_UNSUPPORTED_CHARACTER):
         return True
     return False
 
@@ -454,6 +454,7 @@ def get_is_dropzone_state_in_active_ingestion(state):
     if state not in (
         DropzoneState.OPEN,
         DropzoneState.WARNING_VALIDATION_INCORRECT,
+        DropzoneState.WARNING_UNSUPPORTED_CHARACTER,
         DropzoneState.ERROR_INGESTION,
         DropzoneState.ERROR_POST_INGESTION,
         DropzoneState.INGESTED,

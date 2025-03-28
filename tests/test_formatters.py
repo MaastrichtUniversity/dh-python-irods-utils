@@ -297,6 +297,7 @@ def test_format_string_to_boolean(string):
     [
         (DropzoneState.OPEN, True),
         (DropzoneState.WARNING_VALIDATION_INCORRECT, True),
+        (DropzoneState.WARNING_UNSUPPORTED_CHARACTER, True),
         (DropzoneState.ERROR_INGESTION, False),
         (DropzoneState.ERROR_POST_INGESTION, False),
         (DropzoneState.INGESTED, False),
@@ -312,6 +313,7 @@ def test_get_is_dropzone_state_ingestable(state, expected_result):
     [
         (DropzoneState.OPEN, False),
         (DropzoneState.WARNING_VALIDATION_INCORRECT, False),
+        (DropzoneState.WARNING_UNSUPPORTED_CHARACTER, False),
         (DropzoneState.ERROR_INGESTION, False),
         (DropzoneState.ERROR_POST_INGESTION, False),
         (DropzoneState.INGESTED, False),
