@@ -6,6 +6,7 @@ class DropzoneState(Enum):
     """Enumerate all the possible DropZone states AVUs in iRODS"""
 
     OPEN = "open"
+    IN_QUEUE_FOR_VALIDATION = "in-queue-for-validation"
     VALIDATING = "validating"
     IN_QUEUE_FOR_INGESTION = "in-queue-for-ingestion"
     WARNING_VALIDATION_INCORRECT = "warning-validation-incorrect"
