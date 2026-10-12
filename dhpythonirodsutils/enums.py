@@ -2,6 +2,21 @@
 from enum import Enum
 
 
+class DropzoneAVUs(Enum):
+    """Enumerate dropzone size and validation AVUs in iRODS."""
+
+    # Total bytes measured by the periodic size calculation, stored as a string.
+    DROPZONE_SIZE = "dropzoneSize"
+    # UTC Unix seconds of the latest size calculation, stored as a string.
+    DROPZONE_SIZE_UPDATED = "dropzoneSizeUpdated"
+    # Total bytes found by the pre-ingest content scan, stored as a string.
+    TOTAL_SIZE = "totalSize"
+    # File count from the pre-ingest content scan, stored as a string.
+    NUM_FILES = "numFiles"
+    # "true" if the content scan found no unsupported paths, otherwise "false".
+    IS_INGESTABLE = "isIngestable"
+
+
 class DropzoneState(Enum):
     """Enumerate all the possible DropZone states AVUs in iRODS"""
 
@@ -37,6 +52,102 @@ class UnarchiveState(Enum):
     UNARCHIVE_IN_PROGESS = "unarchive-in-progress {}/{}"
     ERROR_UNARCHIVE_FAILED = "error-unarchive-failed"
     UNARCHIVE_DONE = "unarchive-done"
+
+
+# region Resources
+class ResourceStatus(Enum):
+    """Enumerate statuses accepted when modifying an iRODS resource.
+
+    Catalog queries can return an empty string for an up resource. Preserve
+    that representation when returning raw catalog status to callers.
+    """
+
+    UP = "up"
+    DOWN = "down"
+
+
+class ReplicaStatus(Enum):
+    """Enumerate DATA_REPL_STATUS values returned as strings by GenQuery.
+
+    Incomplete or locked replicas (2, 3, 4) are reset to stale before cleanup
+    by the existing ingest and tape recovery rules.
+    """
+
+    # Replica is out of date or incomplete.
+    STALE = "0"
+    # Replica is current and valid.
+    GOOD = "1"
+    # Replica is being created or updated and has not been finalized.
+    INTERMEDIATE = "2"
+    READ_LOCKED = "3"
+    WRITE_LOCKED = "4"
+
+
+# endregion
+
+
+# region Ingest
+class IngestAttribute(Enum):
+    """Enumerate ingest AVU names and their value types.
+
+    Coordination AVUs belong to the dropzone. Maintenance AVUs belong to the
+    zone-wide ingest maintenance collection.
+    """
+
+    # Values: IngestTransferState; written by the coordinator.
+    TRANSFER_STATE = "ingestTransferState"
+    # Values: IngestStopRequestState; reset by the coordinator, set by rods.
+    STOP_REQUESTED = "ingestStopRequested"
+    # Values: IngestWorkerResult; removed before each transfer, written by the worker.
+    WORKER_RESULT = "ingestWorkerResult"
+    # Values: non-negative UTC Unix seconds, stored as strings; end must follow start.
+    MAINTENANCE_START = "maintenanceStart"
+    MAINTENANCE_END = "maintenanceEnd"
+
+
+class IngestTransferState(Enum):
+    """Enumerate values for 'IngestAttribute.TRANSFER_STATE'.
+
+    These describe the current transfer, rather than the entire ingest workflow.
+    Read DropzoneState separately to determine the ingest outcome.
+    """
+
+    # Worker exit or completion of failure handling has not yet been confirmed.
+    # This can remain stale after a remote callback failure or service restart.
+    ACTIVE = "active"
+    # Worker exited, mounted access was restored, and stop failure handling
+    # completed with the dropzone in error-ingestion.
+    STOPPED = "stopped"
+    # Transfer ended without a confirmed stop, including ordinary failures.
+    FINISHED = "finished"
+
+
+class IngestStopRequestState(Enum):
+    """Enumerate values for 'IngestAttribute.STOP_REQUESTED'.
+
+    A request does not confirm worker exit; a timeout leaves it requested.
+    """
+
+    # The coordinator resets the flag before starting each transfer.
+    NOT_REQUESTED = "false"
+    # rods requested cancellation; the worker checks this flag while copying.
+    REQUESTED = "true"
+
+
+class IngestWorkerResult(Enum):
+    """Enumerate values for 'IngestAttribute.WORKER_RESULT'.
+
+    The coordinator removes this AVU before each transfer. An absent AVU reads
+    as an empty string and means worker exit has not yet been reported.
+    """
+
+    # The worker exited after cancellation handling; coordinator handling may remain.
+    STOPPED = "stopped"
+    # The worker exited normally or with an ordinary failure; success is not implied.
+    EXITED = "exited"
+
+
+# endregion
 
 
 # region Projects
