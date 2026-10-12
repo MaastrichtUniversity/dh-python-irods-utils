@@ -22,6 +22,7 @@ class DropzoneState(Enum):
 
     OPEN = "open"
     IN_QUEUE_FOR_VALIDATION = "in-queue-for-validation"
+    IN_QUEUE_FOR_MAINTENANCE_END = "in-queue-for-maintenance-end"
     VALIDATING = "validating"
     IN_QUEUE_FOR_INGESTION = "in-queue-for-ingestion"
     WARNING_VALIDATION_INCORRECT = "warning-validation-incorrect"

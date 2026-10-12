@@ -302,6 +302,8 @@ def test_format_string_to_boolean(string):
         (DropzoneState.ERROR_POST_INGESTION, False),
         (DropzoneState.INGESTED, False),
         (DropzoneState.INGESTING, False),
+        (DropzoneState.IN_QUEUE_FOR_VALIDATION, False),
+        (DropzoneState.IN_QUEUE_FOR_MAINTENANCE_END, False),
     ],
 )
 def test_get_is_dropzone_state_ingestable(state, expected_result):
@@ -319,6 +321,8 @@ def test_get_is_dropzone_state_ingestable(state, expected_result):
         (DropzoneState.INGESTED, False),
         (DropzoneState.INGESTING, True),
         (DropzoneState.IN_QUEUE_FOR_INGESTION, True),
+        (DropzoneState.IN_QUEUE_FOR_VALIDATION, True),
+        (DropzoneState.IN_QUEUE_FOR_MAINTENANCE_END, True),
         (DropzoneState.VALIDATING, True),
     ],
 )
